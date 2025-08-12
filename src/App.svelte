@@ -1,10 +1,21 @@
 <script>
+  let title = "书本书华";
+  let isFooter = false;
+  let scdata = { content: "取半舍满，克己修身" };
+
+  function handleSc() {
+    jinrishici.load((res) => {
+      if (res.status == "success" && res.data) {
+        scdata = res.data;
+      }
+    });
+  }
 </script>
 
 <main class="content">
   <canvas class="snow" id="snow" width="1349" height="400"></canvas>
   <div class="main-text">
-    <h1 class="ramtitle">取半舍满，克己修身</h1>
+    <h1 class="ramtitle" on:click={handleSc}>{scdata.content}</h1>
     <div class="link-container">
       <div class="outbox">
         <a
@@ -91,35 +102,37 @@
   </div>
   <div class="ground">
     <div class="mound">
-      <div class="mound_text">冰消叶散</div>
+      <div class="mound_text">{title}</div>
       <div class="mound_spade"></div>
     </div>
   </div>
-  <div class="footer">
-    <span class="copyright"
-      >Copyright 2019 - {new Date().getFullYear()} dinglong. All Rights Reserved</span
-    >
-    <span class="links">
-      <a
-        rel="noopener noreferrer"
-        class="record_number"
-        href="https://beian.miit.gov.cn/"
-        target="_blank">陇ICP备2021000332号-1</a
+  {#if isFooter}
+    <div class="footer">
+      <span class="copyright"
+        >Copyright 2019 - {new Date().getFullYear()} dloong.me All Rights Reserved</span
       >
-      <a
-        class="sec_link"
-        href="https://beian.mps.gov.cn/#/query/webSearch?code=61019002002699"
-      >
-        <img class="sec_logo" src="/u/images/ga_logo.png" alt="" />
+      <span class="links">
         <a
-          class="sec_no"
-          href="https://beian.mps.gov.cn/#/query/webSearch?code=61019002002699"
-          rel="noreferrer"
-          target="_blank">陕公网安备61019002002699</a
+          rel="noopener noreferrer"
+          class="record_number"
+          href="https://beian.miit.gov.cn/"
+          target="_blank">陇ICP备2021000332号-1</a
         >
-      </a>
-    </span>
-  </div>
+        <a
+          class="sec_link"
+          href="https://beian.mps.gov.cn/#/query/webSearch?code=61019002002699"
+        >
+          <img class="sec_logo" src="/u/images/ga_logo.png" alt="" />
+          <a
+            class="sec_no"
+            href="https://beian.mps.gov.cn/#/query/webSearch?code=61019002002699"
+            rel="noreferrer"
+            target="_blank">陕公网安备61019002002699</a
+          >
+        </a>
+      </span>
+    </div>
+  {/if}
 </main>
 
 <style scoped lang="less">
