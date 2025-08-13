@@ -1,14 +1,18 @@
 <script>
   let title = "书本书华";
   let isFooter = false;
-  let scdata = { content: "取半舍满，克己修身" };
-
+  let scdata = { content: "取半舍满，克己修身", matchTags: [] };
+  let timer;
   function handleSc() {
-    jinrishici.load((res) => {
-      if (res.status == "success" && res.data) {
-        scdata = res.data;
-      }
-    });
+    if (timer) return;
+    timer = setTimeout(() => {
+      jinrishici.load((res) => {
+        if (res.status == "success" && res.data) {
+          scdata = res.data;
+          timer = null;
+        }
+      });
+    }, 1000);
   }
 </script>
 
@@ -16,10 +20,15 @@
   <canvas class="snow" id="snow" width="1349" height="400"></canvas>
   <div class="main-text">
     <h1 class="ramtitle" on:click={handleSc}>{scdata.content}</h1>
+    <div class="tag">
+      {#each scdata.matchTags as item}
+        <span>{item}</span>
+      {/each}
+    </div>
     <div class="link-container">
       <div class="outbox">
         <a
-          href="https://github.com/dlongs49"
+          href="https://github.com/dloong49"
           rel="noopener noreferrer"
           title="GitHub"
           target="_blank"
@@ -138,15 +147,36 @@
 <style scoped lang="less">
   @media (min-width: 768px) {
   }
+  .tag {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+    span {
+      margin-left: 5px;
+      font-size: 14px;
+      color: #666;
+      padding: 1px 6px;
+      border-radius: 50px;
+      background: rgba(255, 255, 255, 0.3);
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+      &:first-child{
+        margin-left: 0;
+      }
+    }
+  }
   .ramtitle {
     user-select: none;
+    width: fit-content;
+    margin: 0 auto;
   }
   .link-container {
     position: relative;
     width: 170px;
     height: 46px;
     margin: 0 auto;
-    margin-top: 40px;
+    margin-top: 10px;
     cursor: pointer;
     &::after {
       content: "";
